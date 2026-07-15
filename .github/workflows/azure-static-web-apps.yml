@@ -1,6 +1,7 @@
 name: Azure Static Web Apps
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:

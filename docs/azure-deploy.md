@@ -2,6 +2,14 @@
 
 Neverland는 Azure Static Web Apps의 Free 플랜을 사용한다. VM, PostgreSQL, Redis, 고정 IP가 없으므로 공개 사이트의 월 고정비는 원칙적으로 0원이다. 별도 도메인을 구매하면 도메인 비용만 발생한다.
 
+현재 운영 리소스:
+
+- Resource group: `neverland-rg`
+- Static Web App: `neverland-scourge1100`
+- Region: `East Asia`
+- SKU: `Free`
+- URL: `https://wonderful-cliff-01d049c00.7.azurestaticapps.net`
+
 ## 1. 로컬 확인
 
 ```bash

@@ -2,6 +2,8 @@
 
 만든 것과 배운 것을 함께 기록하는 정적 블로그·포트폴리오입니다. Markdown을 원본으로 사용하고 Azure Static Web Apps 무료 플랜에 배포할 수 있도록 구성되어 있습니다.
 
+운영 주소: [https://wonderful-cliff-01d049c00.7.azurestaticapps.net](https://wonderful-cliff-01d049c00.7.azurestaticapps.net)
+
 ## 현재 운영 구조
 
 - `content/`: 글, 프로젝트, 소개 페이지의 Markdown 원본
