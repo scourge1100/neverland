@@ -1,0 +1,92 @@
+handle / {
+  reverse_proxy blog:4000
+}
+
+handle /styles.css {
+  root * /srv/site
+  file_server
+}
+
+handle /app.js {
+  root * /srv/site
+  file_server
+}
+
+handle /og-default.svg {
+  root * /srv/site
+  file_server
+}
+
+handle /og-default.png {
+  root * /srv/site
+  file_server
+}
+
+handle /visit {
+  redir * {$PUBLIC_PORTFOLIO_URL:/public-not-ready.html} 302
+}
+
+handle /public-not-ready.html {
+  root * /srv/site
+  file_server
+}
+
+handle /writing* {
+  reverse_proxy blog:4000
+}
+
+handle /projects* {
+  reverse_proxy blog:4000
+}
+
+handle /tags* {
+  reverse_proxy blog:4000
+}
+
+handle /archive* {
+  reverse_proxy blog:4000
+}
+
+handle /categories* {
+  reverse_proxy blog:4000
+}
+
+handle /about {
+  reverse_proxy blog:4000
+}
+
+handle /experience {
+  reverse_proxy blog:4000
+}
+
+handle /search* {
+  reverse_proxy blog:4000
+}
+
+handle /api/public* {
+  reverse_proxy blog:4000
+}
+
+handle /webhooks/outline {
+  reverse_proxy blog:4000
+}
+
+handle /rss.xml {
+  reverse_proxy blog:4000
+}
+
+handle /sitemap.xml {
+  reverse_proxy blog:4000
+}
+
+handle /robots.txt {
+  reverse_proxy blog:4000
+}
+
+handle /dex/* {
+  reverse_proxy dex:5556
+}
+
+handle {
+  reverse_proxy outline:3000
+}

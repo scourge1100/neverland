@@ -1,0 +1,21 @@
+{
+  "name": "neverland",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-static.mjs",
+    "preview": "node scripts/serve-static.mjs dist",
+    "test:static": "node scripts/check-static.mjs",
+    "outline:up": "docker compose up -d",
+    "outline:down": "docker compose down",
+    "outline:logs": "docker compose logs -f outline",
+    "outline:upload": "node scripts/upload-outline.mjs",
+    "outline:test": "node scripts/upload-outline.mjs --dry-run content/worklog/sample.md",
+    "content:seed": "node scripts/upload-outline.mjs content/worklog/sample.md && node scripts/upload-outline.mjs content/projects/neverland.md && node scripts/upload-outline.mjs content/projects/empire-core.md && node scripts/upload-outline.mjs content/projects/umpire-mobile.md && node scripts/upload-outline.mjs content/projects/realman.md && node scripts/upload-outline.mjs content/pages/about.md && node scripts/upload-outline.mjs content/pages/experience.md",
+    "backup": "sh scripts/backup.sh",
+    "webhook:configure": "node scripts/configure-webhook.mjs",
+    "test": "sh scripts/smoke-test.sh",
+    "preflight": "sh scripts/preflight.sh"
+  }
+}

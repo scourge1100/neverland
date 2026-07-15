@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Neverland</title>
+  <desc id="desc">Work, notes, and experiments. 만든 것과 배운 것을 기록합니다.</desc>
+  <rect width="1200" height="630" fill="#f2efe7"/>
+  <path d="M0 0h1200v18H0z" fill="#e85c3f"/>
+  <circle cx="1020" cy="156" r="210" fill="#163f36"/>
+  <circle cx="1020" cy="156" r="122" fill="none" stroke="#f2efe7" stroke-width="2" opacity=".45"/>
+  <text x="1020" y="205" fill="#f2efe7" font-family="Georgia, serif" font-size="145" font-style="italic" text-anchor="middle">N</text>
+  <text x="76" y="96" fill="#e85c3f" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="5">WORK · NOTES · EXPERIMENTS</text>
+  <text x="72" y="270" fill="#17201d" font-family="Georgia, serif" font-size="100" letter-spacing="-5">Neverland</text>
+  <text x="78" y="360" fill="#17201d" font-family="Arial, sans-serif" font-size="38" font-weight="700">만든 것과 배운 것을 기록합니다.</text>
+  <line x1="76" y1="485" x2="1124" y2="485" stroke="#c8c2b5"/>
+  <text x="76" y="540" fill="#676d68" font-family="Arial, sans-serif" font-size="22">Portfolio · Writing · Projects</text>
+</svg>

@@ -1,0 +1,111 @@
+services:
+  outline:
+    image: outlinewiki/outline:1.8.1
+    container_name: neverland-outline
+    env_file:
+      - .env
+    environment:
+      ALLOWED_PRIVATE_IP_ADDRESSES: 172.29.88.0/24
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      dex:
+        condition: service_started
+    volumes:
+      - outline-data:/var/lib/outline/data
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: neverland-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-outline}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-outline_password}
+      POSTGRES_DB: ${POSTGRES_DB:-outline}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-outline} -d ${POSTGRES_DB:-outline}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: neverland-redis
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  dex:
+    image: ghcr.io/dexidp/dex:v2.41.1
+    container_name: neverland-dex
+    command: ["/bin/sh", "/opt/neverland/render-dex-config.sh"]
+    env_file:
+      - .env
+    environment:
+      DEX_ISSUER: ${DEX_ISSUER:-https://localhost:3443/dex}
+      OIDC_REDIRECT_URI: ${OIDC_REDIRECT_URI:-https://localhost:3443/auth/oidc.callback}
+      GITHUB_REDIRECT_URI: ${GITHUB_REDIRECT_URI:-https://localhost:3443/dex/callback}
+    volumes:
+      - ./config/dex/config.yaml:/etc/dex/config.template.yaml:ro
+      - ./scripts/render-dex-config.sh:/opt/neverland/render-dex-config.sh:ro
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: neverland-caddy
+    env_file:
+      - .env
+    depends_on:
+      - outline
+      - dex
+      - blog
+    ports:
+      - "${HTTPS_PORT:-3443}:3443"
+      - "127.0.0.1:${HTTP_PREVIEW_PORT:-3080}:3080"
+    volumes:
+      - ./config:/etc/caddy:ro
+      - ./config/site:/srv/site:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    restart: unless-stopped
+
+  blog:
+    build:
+      context: .
+      dockerfile: Dockerfile.blog
+    container_name: neverland-blog
+    env_file:
+      - .env
+    environment:
+      BLOG_PORT: 4000
+      OUTLINE_INTERNAL_URL: http://outline:3000
+      BLOG_BASE_URL: ${BLOG_BASE_URL:-https://localhost:3443}
+      GITHUB_USERNAME: ${GITHUB_USERNAME:-scourge1100}
+      OUTLINE_WEBHOOK_SECRET: ${UTILS_SECRET}
+    depends_on:
+      outline:
+        condition: service_healthy
+    networks:
+      default:
+        aliases:
+          - blog.local
+    restart: unless-stopped
+
+volumes:
+  outline-data:
+  postgres-data:
+  redis-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 172.29.88.0/24

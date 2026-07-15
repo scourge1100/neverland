@@ -1,0 +1,12 @@
+{
+  auto_https disable_redirects
+}
+
+localhost:3443 {
+  tls internal
+  import routes.Caddyfile
+}
+
+http://localhost:3080 {
+  import routes.Caddyfile
+}

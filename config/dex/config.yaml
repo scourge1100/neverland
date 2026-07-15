@@ -1,0 +1,23 @@
+issuer: __DEX_ISSUER__
+storage:
+  type: memory
+
+web:
+  http: 0.0.0.0:5556
+
+staticClients:
+  - id: neverland-outline
+    redirectURIs:
+      - __OIDC_REDIRECT_URI__
+    name: Neverland Outline
+    secret: __OIDC_CLIENT_SECRET__
+
+connectors:
+  - type: github
+    id: github
+    name: GitHub
+    config:
+      clientID: __GITHUB_CLIENT_ID__
+      clientSecret: __GITHUB_CLIENT_SECRET__
+      redirectURI: __GITHUB_REDIRECT_URI__
+      useLoginAsID: true
