@@ -1,0 +1,10 @@
+{
+  auto_https off
+  servers {
+    trusted_proxies static private_ranges
+  }
+}
+
+:3080 {
+  import routes.Caddyfile
+}

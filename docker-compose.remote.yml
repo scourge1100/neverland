@@ -1,0 +1,12 @@
+services:
+  caddy:
+    command: ["caddy", "run", "--config", "/etc/caddy/Caddyfile.remote", "--adapter", "caddyfile"]
+
+  blog:
+    environment:
+      BLOG_BASE_URL: https://${SITE_DOMAIN}
+
+  outline:
+    environment:
+      ALLOWED_PRIVATE_IP_ADDRESSES: 172.29.88.0/24
+      OIDC_AUTH_URI: https://${SITE_DOMAIN}/dex/auth

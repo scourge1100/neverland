@@ -3,7 +3,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 const root = path.resolve("dist");
-const required = ["index.html", "writing/index.html", "projects/index.html", "about/index.html", "experience/index.html", "search/index.html", "rss.xml", "sitemap.xml", "robots.txt", "api/public/content.json", "api/public/github.json", "staticwebapp.config.json", "404/index.html"];
+const required = ["index.html", "writing/index.html", "projects/index.html", "about/index.html", "experience/index.html", "search/index.html", "mermaid.js", "rss.xml", "sitemap.xml", "robots.txt", "api/public/content.json", "api/public/github.json", "staticwebapp.config.json", "404/index.html"];
 let failed = false;
 for (const file of required) {
   if (!fs.existsSync(path.join(root, file))) { console.error(`FAIL missing ${file}`); failed = true; }
@@ -13,6 +13,11 @@ const content = JSON.parse(fs.readFileSync(path.join(root, "api/public/content.j
 for (const item of [...content.writings, ...content.projects]) {
   const route = path.join(root, item.type === "project" ? "projects" : "writing", item.slug, "index.html");
   if (!fs.existsSync(route)) { console.error(`FAIL missing route for ${item.slug}`); failed = true; }
+}
+const neverlandProject = fs.readFileSync(path.join(root, "projects", "neverland", "index.html"), "utf8");
+if (!neverlandProject.includes('class="mermaid"') || !neverlandProject.includes('/mermaid.js')) {
+  console.error("FAIL Mermaid diagram was not rendered into the Neverland project page");
+  failed = true;
 }
 for (const html of ["index.html", "writing/index.html", "projects/index.html"]) {
   const value = fs.readFileSync(path.join(root, html), "utf8");

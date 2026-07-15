@@ -26,12 +26,20 @@ function markdownToHtml(markdown) {
   const html = [];
   let inCode = false;
   let code = [];
+  let codeLanguage = "";
   let list = "";
   const closeList = () => { if (list) { html.push(`</${list}>`); list = ""; } };
   for (const line of lines) {
-    if (line.startsWith("```")) {
+    const fence = line.match(/^```([A-Za-z0-9_-]+)?/);
+    if (fence) {
       closeList();
-      if (inCode) { html.push(`<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`); code = []; }
+      if (inCode) {
+        html.push(codeLanguage === "mermaid" ? `<pre class="mermaid">${escapeHtml(code.join("\n"))}</pre>` : `<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
+        code = [];
+        codeLanguage = "";
+      } else {
+        codeLanguage = (fence[1] || "").toLowerCase();
+      }
       inCode = !inCode;
       continue;
     }
@@ -61,7 +69,7 @@ function markdownToHtml(markdown) {
     else html.push(`<p>${inlineMarkdown(line)}</p>`);
   }
   closeList();
-  if (inCode) html.push(`<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
+  if (inCode) html.push(codeLanguage === "mermaid" ? `<pre class="mermaid">${escapeHtml(code.join("\n"))}</pre>` : `<pre><code>${escapeHtml(code.join("\n"))}</code></pre>`);
   return html.join("\n");
 }
 
@@ -124,7 +132,7 @@ function formatDate(value) {
 function layout({ title, description, body, canonical = "/" }) {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(description);
-  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${safeTitle} — Neverland</title><meta name="description" content="${safeDescription}"><meta property="og:type" content="website"><meta property="og:title" content="${safeTitle} — Neverland"><meta property="og:description" content="${safeDescription}"><meta property="og:image" content="${baseUrl}/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${baseUrl}${canonical}"><link rel="alternate" type="application/rss+xml" title="Neverland RSS" href="/rss.xml"><link rel="icon" href="/og-default.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css?v=20260715-4"></head><body><header class="site-header"><a class="brand" href="/"><span class="brand-mark">N</span><span>Neverland</span></a><nav class="main-nav"><a href="/writing">Writing</a><a href="/projects">Projects</a><a href="/about">About</a></nav><a class="admin-link" href="https://github.com/${escapeHtml(githubUsername)}" rel="me">GitHub ↗</a></header><main class="page-shell">${body}</main><footer class="site-footer"><div class="section-shell footer-inner"><div><span class="brand-mark inverse-mark">N</span><strong>Neverland</strong></div><p>Built as a living archive.</p></div></footer></body></html>`;
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${safeTitle} — Neverland</title><meta name="description" content="${safeDescription}"><meta property="og:type" content="website"><meta property="og:title" content="${safeTitle} — Neverland"><meta property="og:description" content="${safeDescription}"><meta property="og:image" content="${baseUrl}/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${baseUrl}${canonical}"><link rel="alternate" type="application/rss+xml" title="Neverland RSS" href="/rss.xml"><link rel="icon" href="/og-default.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css?v=20260716-1"><script type="module" src="/mermaid.js"></script></head><body><header class="site-header"><a class="brand" href="/"><span class="brand-mark">N</span><span>Neverland</span></a><nav class="main-nav"><a href="/writing">Writing</a><a href="/projects">Projects</a><a href="/about">About</a></nav><a class="admin-link" href="https://github.com/${escapeHtml(githubUsername)}" rel="me">GitHub ↗</a></header><main class="page-shell">${body}</main><footer class="site-footer"><div class="section-shell footer-inner"><div><span class="brand-mark inverse-mark">N</span><strong>Neverland</strong></div><p>Built as a living archive.</p></div></footer></body></html>`;
 }
 
 function cards(items, emptyText) {
@@ -203,7 +211,7 @@ async function main() {
   };
   const all = [...content.writings, ...content.projects];
 
-  for (const asset of ["styles.css", "app.js", "og-default.png", "og-default.svg"]) {
+  for (const asset of ["styles.css", "app.js", "mermaid.js", "og-default.png", "og-default.svg"]) {
     fs.copyFileSync(path.join(siteDir, asset), path.join(outDir, asset));
   }
   let home = fs.readFileSync(path.join(siteDir, "index.html"), "utf8")

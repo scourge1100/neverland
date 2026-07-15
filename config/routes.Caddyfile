@@ -12,6 +12,11 @@ handle /app.js {
   file_server
 }
 
+handle /mermaid.js {
+  root * /srv/site
+  file_server
+}
+
 handle /og-default.svg {
   root * /srv/site
   file_server

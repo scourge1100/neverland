@@ -16,10 +16,10 @@ postgres_user=${postgres_user:-outline}
 postgres_db=${postgres_db:-outline}
 
 echo "Backing up PostgreSQL..."
-docker compose exec -T postgres pg_dump -U "$postgres_user" -d "$postgres_db" | gzip > "$target/postgres.sql.gz"
+docker exec neverland-postgres pg_dump -U "$postgres_user" -d "$postgres_db" | gzip > "$target/postgres.sql.gz"
 
 echo "Backing up Outline file storage..."
-docker compose cp outline:/var/lib/outline/data/. "$target/outline-data" >/dev/null
+docker cp neverland-outline:/var/lib/outline/data/. "$target/outline-data" >/dev/null
 tar -czf "$target/outline-data.tar.gz" -C "$target" outline-data
 rm -rf "$target/outline-data"
 

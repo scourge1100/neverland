@@ -1,0 +1,11 @@
+[Unit]
+Description=Back up Neverland Outline data
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+WorkingDirectory=/opt/neverland
+Environment=BACKUP_DIR=/opt/neverland/backups
+Environment=BACKUP_RETENTION_DAYS=14
+ExecStart=/opt/neverland/scripts/backup.sh

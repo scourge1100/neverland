@@ -1,0 +1,8 @@
+[Unit]
+Description=Renew Empire and Neverland Let's Encrypt certificates
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/neverland-renew-certificates
