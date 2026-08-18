@@ -4,7 +4,7 @@
   --ink: #17201d;
   --muted: #676d68;
   --line: #c8c2b5;
-  --accent: #e85c3f;
+  --accent: #b8860b;
   --forest: #163f36;
   --white: #fbfaf6;
   font-synthesis: none;
@@ -19,7 +19,7 @@ a { color: inherit; text-decoration: none; }
 .section-shell { width: min(1180px, calc(100% - 48px)); margin-inline: auto; }
 .site-header { width: min(1320px, calc(100% - 48px)); height: 88px; margin-inline: auto; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.03em; }
-.brand-mark { display: grid; width: 34px; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--ink); color: var(--paper); font-family: Georgia, serif; font-style: italic; }
+.brand-mark { display: grid; width: 34px; aspect-ratio: 1; place-items: center; border-radius: 50%; background: var(--forest); color: var(--paper); font-family: Georgia, serif; font-style: italic; }
 .main-nav { display: flex; gap: 34px; font-size: 14px; }
 .main-nav a, .admin-link, .section-heading > a { border-bottom: 1px solid transparent; }
 .main-nav a:hover, .admin-link:hover, .section-heading > a:hover { border-color: currentColor; }
@@ -92,7 +92,7 @@ a { color: inherit; text-decoration: none; }
 .about-grid > div > p { margin: 8px 0 0; color: var(--muted); font-size: 17px; line-height: 1.8; }
 .about-links { display: flex; gap: 28px; margin-top: 38px; font-size: 13px; font-weight: 700; }
 .about-links a { padding-bottom: 5px; border-bottom: 1px solid var(--ink); }
-.site-footer { background: var(--ink); color: var(--paper); }
+.site-footer { background: var(--forest); color: var(--paper); }
 .footer-inner { min-height: 150px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .footer-inner > div { display: flex; align-items: center; gap: 12px; }
 .inverse-mark { background: var(--paper); color: var(--ink); }

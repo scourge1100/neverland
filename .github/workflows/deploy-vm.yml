@@ -1,0 +1,27 @@
+name: Deploy to Neverland VM
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VM_DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ vars.VM_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Pull latest and restart blog service
+        run: |
+          ssh -i ~/.ssh/id_ed25519 "${{ vars.VM_USER }}@${{ vars.VM_HOST }}" '
+            set -e
+            cd /opt/neverland
+            git fetch origin main
+            git reset --hard origin/main
+            docker compose -f docker-compose.yml -f docker-compose.remote.yml up -d --build blog
+          '
