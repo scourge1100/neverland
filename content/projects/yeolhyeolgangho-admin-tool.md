@@ -160,50 +160,52 @@ sequenceDiagram
 
 ```mermaid
 flowchart TB
+    SNS[SNS] --> LNLB[Lobby NLB]
+    SNS --> WNLB[World NLB]
+
     subgraph VPC["VPC 10.60.0.0/16 (Region: Seoul)"]
-        SNS[SNS] --- NLB[Lobby NLB / World NLB]
-
-        subgraph Public["Public Subnet"]
+        subgraph PublicTier["Lobby Group · Public Subnet x2 (10.60.0.0/24, 10.60.1.0/24)"]
+            direction LR
             NAT[NAT Gateway / EIP]
-            Bastion[Bastion WIN / UBT]
-            Lobby[Lobby ASG]
+            Bastion[WIN-Bastion / UBT-Bastion]
+            Tools[LoadTest / Gitlab]
+            LobbyASG[Lobby ASG]
         end
-        NLB --> Public
+        LNLB --> PublicTier
+        WNLB --> PublicTier
 
-        subgraph Common["Common Group (Private Subnet)"]
-            Conn[Connection]
-            Acc[Account]
-            Rank[Ranking]
-            Exch[Exchange]
-            Cfg[Config / Patch]
-            Iface[Interface]
+        subgraph AppRow[" "]
+            direction LR
+            DevMgtL[["DEVMGT Group\n(10.60.250.0/24)"]]
+            subgraph AppTier["Common Group · Private Subnet x2 (10.60.2.0/24, 10.60.3.0/24)"]
+                direction TB
+                Svc[Connection / Account / Ranking / Exchange]
+                Svc2[Config·Patch / Interface]
+                Redis1[(Redis)]
+                DBGroup[(DB Group: SQL Server\nConnection / Account / Ranking / Exchange / Config)]
+            end
+            DevMgtR[["DEVMGT Group\n(10.60.251.0/24)"]]
         end
-        Public --> Common
+        PublicTier --> AppTier
 
-        subgraph DevMgt["DEVMGT Group"]
-            Redis1[(Redis)]
-            DB1[(DB Group: SQL Server\nConnection / Account / Ranking / Exchange / Config)]
+        subgraph WorldGroup["World Group #1 — World #1~#6"]
+            direction LR
+            subgraph AZa["Availability Zone: ap-northeast-2a"]
+                direction TB
+                World1["World #1 (10.60.4.0/24)\nWorld / Character / NPC / Item"]
+                DB1[(DB Group: Character / Item)]
+                World35["World #3, #5 (10.60.6.0/24, 10.60.8.0/24)\n동일 구조 반복"]
+            end
+            subgraph AZc["Availability Zone: ap-northeast-2c"]
+                direction TB
+                World2["World #2 (10.60.5.0/24)\nWorld / Character / NPC / Item"]
+                DB2[(DB Group: Character / Item)]
+                World46["World #4, #6 (10.60.9.0/24 ~ 10.60.13.0/24)\n동일 구조 반복"]
+            end
         end
-        Common --> DevMgt
-
-        subgraph World1["World Group #1 (AZ-a)"]
-            W1[World / Character / NPC / Item]
-            R1[(Redis)]
-            D1[(DB Group: Character / Item)]
-        end
-        subgraph World2["World Group #2 (AZ-c)"]
-            W2[World / Character / NPC / Item]
-            R2[(Redis)]
-            D2[(DB Group: Character / Item)]
-        end
-        subgraph WorldN["World Group #3 ~ #6"]
-            WN[World / Character / NPC / Item ...]
-        end
-        Common --> World1
-        Common --> World2
-        Common --> WorldN
+        AppTier --> WorldGroup
 
         S3[(S3 + S3 Endpoint)]
-        DevMgt --> S3
+        AppTier --> S3
     end
 ```
