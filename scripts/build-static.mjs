@@ -129,6 +129,15 @@ function formatDate(value) {
   return new Intl.DateTimeFormat("ko-KR", { year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(value));
 }
 
+function periodStart(period = "") {
+  const first = period.split(/[—–-]/)[0]?.trim();
+  const match = first?.match(/^(\d{4})(?:\.(\d{1,2}))?/);
+  if (!match) return 0;
+  const year = Number(match[1]);
+  const month = match[2] ? Number(match[2]) - 1 : 0;
+  return new Date(year, month, 1).getTime();
+}
+
 function layout({ title, description, body, canonical = "/" }) {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(description);
@@ -206,7 +215,7 @@ async function main() {
   }
   const content = {
     writings: items.filter((item) => item.type === "writing"),
-    projects: items.filter((item) => item.type === "project"),
+    projects: items.filter((item) => item.type === "project").sort((a, b) => periodStart(b.period) - periodStart(a.period)),
     pages: items.filter((item) => item.type === "page"),
   };
   const all = [...content.writings, ...content.projects];
