@@ -153,3 +153,57 @@ sequenceDiagram
 ## 결과
 
 운영자가 서버 접근 없이 운영툴을 통해 대부분의 관리 작업을 수행할 수 있는 환경을 구축했다. 오픈 전 반드시 필요한 공지/아이템 지급/유저 관리 기능을 안정적으로 제공해 운영팀 준비 시간을 단축했고, 직관적인 UI와 권한 관리 기능으로 운영 효율성과 업무 편의성이 높아졌다. 첫 실무 프로젝트로서 실제 배포 환경 이해, 다중 DB 연동, 프런트·백엔드 개발 경험을 통해 빠르게 성장할 수 있었다.
+
+## 참고: 사내 표준 AWS 3-티어 아키텍처
+
+운영툴이 올라가 있던 전체 인프라는 사내 표준으로 이미 설계·구축돼 있던 AWS 아키텍처였다. 본인이 직접 설계한 부분은 아니고, 이 위에서 운영툴 Web 기능 개발과 연동 구현을 담당했다. 구조를 이해하는 데 참고했던 전체 그림은 다음과 같다.
+
+```mermaid
+flowchart TB
+    subgraph VPC["VPC 10.60.0.0/16 (Region: Seoul)"]
+        SNS[SNS] --- NLB[Lobby NLB / World NLB]
+
+        subgraph Public["Public Subnet"]
+            NAT[NAT Gateway / EIP]
+            Bastion[Bastion WIN / UBT]
+            Lobby[Lobby ASG]
+        end
+        NLB --> Public
+
+        subgraph Common["Common Group (Private Subnet)"]
+            Conn[Connection]
+            Acc[Account]
+            Rank[Ranking]
+            Exch[Exchange]
+            Cfg[Config / Patch]
+            Iface[Interface]
+        end
+        Public --> Common
+
+        subgraph DevMgt["DEVMGT Group"]
+            Redis1[(Redis)]
+            DB1[(DB Group: SQL Server\nConnection / Account / Ranking / Exchange / Config)]
+        end
+        Common --> DevMgt
+
+        subgraph World1["World Group #1 (AZ-a)"]
+            W1[World / Character / NPC / Item]
+            R1[(Redis)]
+            D1[(DB Group: Character / Item)]
+        end
+        subgraph World2["World Group #2 (AZ-c)"]
+            W2[World / Character / NPC / Item]
+            R2[(Redis)]
+            D2[(DB Group: Character / Item)]
+        end
+        subgraph WorldN["World Group #3 ~ #6"]
+            WN[World / Character / NPC / Item ...]
+        end
+        Common --> World1
+        Common --> World2
+        Common --> WorldN
+
+        S3[(S3 + S3 Endpoint)]
+        DevMgt --> S3
+    end
+```
