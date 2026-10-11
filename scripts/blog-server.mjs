@@ -75,7 +75,8 @@ function markdownToHtml(markdown) {
   let codeLanguage = "";
   let list = "";
   const closeList = () => { if (list) { html.push(`</${list}>`); list = ""; } };
-  for (const line of lines) {
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
     const fence = line.match(/^```([A-Za-z0-9_-]+)?/);
     if (fence) {
       closeList();
@@ -90,6 +91,17 @@ function markdownToHtml(markdown) {
       continue;
     }
     if (inCode) { code.push(line); continue; }
+    if (/^\s*\|.*\|\s*$/.test(line) && /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/.test(lines[index + 1] || "")) {
+      closeList();
+      const cells = (row) => row.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((cell) => inlineMarkdown(cell.trim()));
+      const head = cells(line);
+      const rows = [];
+      index += 2;
+      while (index < lines.length && /^\s*\|.*\|\s*$/.test(lines[index])) { rows.push(cells(lines[index])); index += 1; }
+      index -= 1;
+      html.push(`<table><thead><tr>${head.map((cell) => `<th>${cell}</th>`).join("")}</tr></thead><tbody>${rows.map((row) => `<tr>${row.map((cell) => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody></table>`);
+      continue;
+    }
     const heading = line.match(/^(#{1,4})\s+(.+)$/);
     if (heading) { closeList(); const level = Math.min(heading[1].length + 1, 5); html.push(`<h${level}>${inlineMarkdown(heading[2])}</h${level}>`); continue; }
     const bullet = line.match(/^\s*[*-]\s+(.+)$/);
@@ -209,12 +221,12 @@ async function loadGithub() {
 function layout({ title, description, body, canonical = "/" }) {
   const safeTitle = escapeHtml(title);
   const safeDescription = escapeHtml(description);
-  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${safeTitle} — Neverland</title><meta name="description" content="${safeDescription}"><meta property="og:type" content="website"><meta property="og:title" content="${safeTitle} — Neverland"><meta property="og:description" content="${safeDescription}"><meta property="og:image" content="${baseUrl}/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${baseUrl}${canonical}"><link rel="alternate" type="application/rss+xml" title="Neverland RSS" href="/rss.xml"><link rel="icon" href="/og-default.svg" type="image/svg+xml"><link rel="stylesheet" href="/styles.css?v=20260716-1"><script type="module" src="/mermaid.js"></script></head><body><header class="site-header"><a class="brand" href="/"><span class="brand-mark">N</span><span>Neverland</span></a><nav class="main-nav"><a href="/writing">Writing</a><a href="/projects">Projects</a><a href="/about">About</a></nav><a class="admin-link" href="/auth/oidc">Write ↗</a></header><main class="page-shell">${body}</main><footer class="site-footer"><div class="section-shell footer-inner"><div><span class="brand-mark inverse-mark">N</span><strong>Neverland</strong></div><p>Built as a living archive.</p></div></footer></body></html>`;
+  return `<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${safeTitle} — Neverland</title><meta name="description" content="${safeDescription}"><meta property="og:type" content="website"><meta property="og:title" content="${safeTitle} — Neverland"><meta property="og:description" content="${safeDescription}"><meta property="og:image" content="${baseUrl}/og-default.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:type" content="image/png"><meta name="twitter:card" content="summary_large_image"><link rel="canonical" href="${baseUrl}${canonical}"><link rel="alternate" type="application/rss+xml" title="Neverland RSS" href="/rss.xml"><link rel="icon" href="/og-default.svg" type="image/svg+xml"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@400;600&display=swap"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"><link rel="stylesheet" href="/styles.css?v=20261011-1"><script type="module" src="/mermaid.js"></script></head><body><header class="site-header"><a class="brand" href="/"><span class="brand-mark">N</span><span>Neverland</span></a><nav class="main-nav"><a href="/projects">Projects</a><a href="/writing">Writing</a><a href="/about">About</a></nav><a class="admin-link" href="/auth/oidc">Write ↗</a></header><main class="page-shell">${body}</main><footer class="site-footer"><div class="section-shell footer-inner"><div><span class="brand-mark inverse-mark">N</span><strong>Neverland</strong></div><p>Built as a living archive.</p></div></footer></body></html>`;
 }
 
 function cards(items, emptyText) {
   if (!items.length) return `<p class="empty-state">${escapeHtml(emptyText)}</p>`;
-  return `<div class="archive-list">${items.map((item) => `<article><div class="article-meta"><a href="/categories/${encodeURIComponent(item.category)}">${escapeHtml(item.category)}</a><time datetime="${item.publishedAt}">${formatDate(item.publishedAt)}</time></div><h2><a href="/${item.type === "project" ? "projects" : "writing"}/${encodeURIComponent(item.slug)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.summary)}</p><div class="tag-row">${item.tags.map((tag) => `<a href="/tags/${encodeURIComponent(tag)}">#${escapeHtml(tag)}</a>`).join("")}</div></article>`).join("")}</div>`;
+  return `<div class="archive-list">${items.map((item) => `<article><div class="article-meta"><a href="/categories/${encodeURIComponent(item.category)}">${escapeHtml(item.category)}</a>${item.type === "project" && item.period ? `<span>${escapeHtml(item.period)}</span>` : `<time datetime="${item.publishedAt}">${formatDate(item.publishedAt)}</time>`}</div><h2><a href="/${item.type === "project" ? "projects" : "writing"}/${encodeURIComponent(item.slug)}">${escapeHtml(item.title)}</a></h2><p>${escapeHtml(item.summary)}</p><div class="tag-row">${item.tags.map((tag) => `<a href="/tags/${encodeURIComponent(tag)}">#${escapeHtml(tag)}</a>`).join("")}</div></article>`).join("")}</div>`;
 }
 
 function facets(items) {
@@ -294,7 +306,7 @@ const server = http.createServer(async (req, res) => {
       const item = all.find((entry) => entry.type === (detailMatch[1] === "projects" ? "project" : "writing") && entry.slug === decodeURIComponent(detailMatch[2]));
       if (!item) return send(res, 404, "text/html", layout({ title: "Not found", description: "페이지를 찾을 수 없습니다.", body: '<section class="page-heading"><h1>페이지를 찾을 수 없습니다.</h1><a href="/">홈으로 돌아가기</a></section>' }));
       const projectFacts = item.type === "project" ? `<dl class="project-facts"><div><dt>Role</dt><dd>${escapeHtml(item.role || "Project contributor")}</dd></div><div><dt>Period</dt><dd>${escapeHtml(item.period || formatDate(item.publishedAt))}</dd></div></dl>` : "";
-      const body = `<article class="article-page"><header><p class="section-number">${escapeHtml(item.category)}</p><h1>${escapeHtml(item.title)}</h1><p class="article-lead">${escapeHtml(item.summary)}</p>${projectFacts}<div class="article-meta"><time datetime="${item.publishedAt}">${formatDate(item.publishedAt)}</time><span>${item.tags.map((tag) => `#${escapeHtml(tag)}`).join(" · ")}</span></div></header><div class="prose">${markdownToHtml(item.text)}</div></article>`;
+      const body = `<article class="article-page"><header><a class="back-link" href="/${detailMatch[1]}">← ${detailMatch[1] === "projects" ? "Projects" : "Writing"}</a><p class="section-number">${escapeHtml(item.category)}</p><h1>${escapeHtml(item.title)}</h1><p class="article-lead">${escapeHtml(item.summary)}</p>${projectFacts}<div class="article-meta"><time datetime="${item.publishedAt}">${formatDate(item.publishedAt)}</time><span>${item.tags.map((tag) => `#${escapeHtml(tag)}`).join(" · ")}</span></div></header><div class="prose">${markdownToHtml(item.text)}</div></article>`;
       return send(res, 200, "text/html", layout({ title: item.title, description: item.summary, canonical: url.pathname, body }));
     }
     if (url.pathname === "/rss.xml") {
