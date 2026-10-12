@@ -206,7 +206,8 @@ async function main() {
   fs.rmSync(outDir, { recursive: true, force: true });
   fs.mkdirSync(outDir, { recursive: true });
 
-  const items = walkMarkdown(contentDir).map(parseMarkdown).sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
+  // The static backup is Korean-only for now; English sources live under content/en and are served by the dynamic site.
+  const items = walkMarkdown(contentDir).filter((file) => path.relative(contentDir, file).split(path.sep)[0] !== "en").map(parseMarkdown).sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   const slugs = new Set();
   for (const item of items) {
     const key = `${item.type}:${item.slug}`;
@@ -223,10 +224,10 @@ async function main() {
   for (const asset of ["styles.css", "app.js", "mermaid.js", "og-default.png", "og-default.svg"]) {
     fs.copyFileSync(path.join(siteDir, asset), path.join(outDir, asset));
   }
-  let home = fs.readFileSync(path.join(siteDir, "index.html"), "utf8")
+  const home = fs.readFileSync(path.join(siteDir, "index.html"), "utf8")
     .replaceAll("https://localhost:3443", baseUrl)
-    .replace('<a class="admin-link" href="/auth/oidc">Write <span aria-hidden="true">↗</span></a>', `<a class="admin-link" href="https://github.com/${githubUsername}" rel="me">GitHub <span aria-hidden="true">↗</span></a>`)
-    .replaceAll("20260715-3", "20260715-4");
+    .replace(/\s*<a class="lang-switch"[^>]*>.*?<\/a>/, "")
+    .replace(/\s*<a class="admin-link"[^>]*>.*?<\/a>/, "");
   writeRoute("/", home);
 
   writeRoute("/writing", layout({ title: "Writing", description: "문제 해결 과정과 배운 것을 기록한 글", canonical: "/writing", body: `<section class="page-heading"><p class="section-number">WRITING</p><h1>기록</h1><p>문제를 해결한 과정과 다시 활용할 수 있는 배움을 남깁니다.</p></section>${facets(content.writings)}${cards(content.writings, "아직 공개된 글이 없습니다.")}` }));
