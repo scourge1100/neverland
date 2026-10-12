@@ -1,5 +1,9 @@
 document.getElementById("year").textContent = new Date().getFullYear();
 
+const lang = document.documentElement.lang === "en" ? "en" : "ko";
+const prefix = lang === "en" ? "/en" : "";
+const isLang = (item) => (item.lang || "ko") === lang;
+
 const TAG_LABELS = {
   "spring-boot": "Spring Boot", spring: "Spring", "react-native": "React Native", react: "React", nextjs: "Next.js",
   postgresql: "PostgreSQL", mybatis: "MyBatis", plsql: "PL/SQL", "apache-poi": "Apache POI", "kendo-ui": "Kendo UI",
@@ -29,7 +33,7 @@ function periodNode(period) {
 
 function projectRow(project) {
   const row = el("a", "proj-row");
-  row.href = `/projects/${encodeURIComponent(project.slug)}`;
+  row.href = `${prefix}/projects/${encodeURIComponent(project.slug)}`;
   const main = el("span", "proj-main");
   main.append(el("strong", "", project.title), el("span", "", project.summary));
   row.append(periodNode(project.period || ""), main, el("span", "proj-tags", (project.tags || []).slice(0, 3).map(tagLabel).join(" · ")));
@@ -38,7 +42,7 @@ function projectRow(project) {
 
 function noteRow(item) {
   const row = el("a", "note-row");
-  row.href = `/writing/${encodeURIComponent(item.slug)}`;
+  row.href = `${prefix}/writing/${encodeURIComponent(item.slug)}`;
   const date = new Date(item.publishedAt);
   const time = el("time", "", `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, "0")}`);
   time.dateTime = item.publishedAt;
@@ -54,13 +58,15 @@ fetch("/api/public/content.json")
     return response.json();
   })
   .then(({ writings = [], projects = [] }) => {
-    const featured = projects.filter((project) => project.featured).slice(0, 8);
+    const langProjects = projects.filter(isLang);
+    const langWritings = writings.filter(isLang);
+    const featured = langProjects.filter((project) => project.featured).slice(0, 8);
     if (featured.length) {
       document.getElementById("project-list").replaceChildren(...featured.map(projectRow));
-      document.getElementById("projects-all").textContent = `전체 ${projects.length}개 보기 →`;
+      document.getElementById("projects-all").textContent = lang === "en" ? `View all ${langProjects.length} →` : `전체 ${langProjects.length}개 보기 →`;
     }
-    if (writings.length) {
-      document.getElementById("note-list").replaceChildren(...writings.slice(0, 4).map(noteRow));
+    if (langWritings.length) {
+      document.getElementById("note-list").replaceChildren(...langWritings.slice(0, 4).map(noteRow));
     }
   })
   .catch((error) => console.warn("Neverland content could not be loaded", error));

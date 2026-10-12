@@ -36,6 +36,10 @@ handle /public-not-ready.html {
   file_server
 }
 
+handle /en* {
+  reverse_proxy blog:4000
+}
+
 handle /writing* {
   reverse_proxy blog:4000
 }

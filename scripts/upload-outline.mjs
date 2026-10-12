@@ -72,7 +72,7 @@ function parseMarkdown(filePath) {
 
 function withNeverlandMeta(body, meta) {
   const publicMeta = {};
-  for (const key of ["type", "slug", "summary", "category", "tags", "featured", "role", "period"]) {
+  for (const key of ["type", "slug", "summary", "category", "tags", "featured", "role", "period", "lang"]) {
     if (meta[key] !== undefined && meta[key] !== "" && (!Array.isArray(meta[key]) || meta[key].length)) {
       publicMeta[key] = meta[key];
     }

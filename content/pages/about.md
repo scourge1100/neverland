@@ -32,7 +32,3 @@ tags:
 ## 이곳에서 볼 수 있는 것
 
 Neverland에는 작업 과정에서 얻은 기술 노트, 대표 프로젝트의 case study, 다시 꺼내 보고 싶은 생각을 함께 정리합니다.
-
-## GitHub
-
-[scourge1100 GitHub 프로필](https://github.com/scourge1100)

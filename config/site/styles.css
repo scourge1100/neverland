@@ -30,6 +30,9 @@ a { color: inherit; text-decoration: none; }
 .main-nav a { color: var(--muted); transition: color .15s; }
 .main-nav a:hover { color: var(--ink); }
 .main-nav .admin-link { color: #9aa09b; }
+.main-nav { align-items: center; }
+.lang-switch { padding: 2px 9px; border: 1px solid var(--line); border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; }
+.main-nav .lang-switch:hover { border-color: var(--ink); }
 
 /* ---------- home ---------- */
 .intro { padding: 72px 0 60px; }
