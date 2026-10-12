@@ -21,11 +21,11 @@ lang: "en"
 
 # Gimpo Airport International Terminal SBD Implementation
 
-This project installed Self Bag Drop (SBD) equipment, where passengers check in their own baggage, at the international terminal of Gimpo Airport. I worked on it at Bajeul System, handling project delivery and management. By coordinating integration with airline systems, communicating technically with the overseas manufacturer, and handling operations after deployment, I saw up close how an airport system fits together across several parties.
+This project installed Self Bag Drop (SBD) equipment, where passengers check in their own baggage, at the international terminal of Gimpo Airport. I worked on it at BZ System, handling project delivery and management. By coordinating integration with airline systems, communicating technically with the overseas manufacturer, and handling operations after deployment, I saw up close how an airport system fits together across several parties.
 
 ## Background
 
-SBD lets passengers check in baggage themselves at a machine, instead of a staff member doing it at the check-in counter. Korea Airports Corporation commissioned a project to introduce it at the international terminal of Gimpo Airport, and Bajeul System took part as the main contractor. The equipment and solution were products of Scarabee of the Netherlands.
+SBD lets passengers check in baggage themselves at a machine, instead of a staff member doing it at the check-in counter. Korea Airports Corporation commissioned a project to introduce it at the international terminal of Gimpo Airport, and BZ System took part as the main contractor. The equipment and solution were products of Scarabee of the Netherlands.
 
 SBD is not finished once the equipment is installed. The passenger's passport and boarding pass information has to be checked against the airline's Departure Control System (DCS), and a baggage tag for that flight has to be issued. That makes it an integration project involving the equipment manufacturer, the airport corporation, and each airline's system owners.
 
@@ -62,7 +62,7 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    K["Korea Airports Corporation\nClient"] --> V["Bajeul System\nMain contractor"]
+    K["Korea Airports Corporation\nClient"] --> V["BZ System\nMain contractor"]
     V --> S["Scarabee\nProvides SBD product · solution"]
     V --> AL["Airline systems\nDCS integration talks"]
     S -. "Technical talks · interpretation" .-> V
@@ -96,7 +96,7 @@ sequenceDiagram
 
 ## What I Worked On
 
-- **Project delivery**: Delivered the project by managing schedule and issues under a manager who served as PM
+- **Project delivery**: Delivered the project by managing schedule and issues under the project manager (a senior colleague)
 - **DCS integration coordination by airline**: Discussed what each integration required with the airlines to be integrated, including Korean Air, Asiana Airlines, Jeju Air, and JAL, and coordinated schedules
 - **Technical interpretation**: Interpreted discussions with Scarabee's local engineers, and also interpreted when their CTO explained the system structure, the program flow, and code-level characteristics, so that the domestic team could understand the system
 - **Operations and maintenance**: Took part in operating the installed equipment and responding to on-site issues after deployment

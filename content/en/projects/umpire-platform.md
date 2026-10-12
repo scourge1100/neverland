@@ -205,7 +205,7 @@ The per-request authentication lookup did not filter out deleted users. This was
 - **PostgreSQL**: One DB covers relational data and also the trigram search for the rules guide.
 - **React Native + Expo**: For a small number of users, I could not build iOS, Android, and web separately. One codebase and EAS Update let JavaScript changes ship without app store review.
 - **Thymeleaf admin screen**: Tasks done on a PC, such as writing announcements, compiling settlements, and viewing logs, were delivered quickly with server rendering, without a separate frontend project.
-- **Expo Push + Web Push**: Two channels cover mobile and web for free. Kakao Alimtalk and Naver push did not fit technically or on cost, so I reviewed them and put them on hold.
+- **Expo Push + Web Push**: Two channels cover mobile and web for free. Kakao AlarmTalk and Naver push did not fit technically or on cost, so I reviewed them and put them on hold.
 - **JWT + refresh rotation**: To keep sessions long on a mobile app and still respond to token theft, I applied refresh token rotation and reuse detection.
 
 ## Technology

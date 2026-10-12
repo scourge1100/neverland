@@ -156,7 +156,7 @@ The production push audit workflow compared against a hardcoded Flyway schema ve
 - **Spring Boot 3 + Spring Security + JWT**: because the API is stateless, mobile apps, the web, and other services all authenticate the same way. Only refresh tokens are managed in the DB for sessions, so the server can control rotation and revocation.
 - **PostgreSQL + Flyway**: the schema is managed as code, and Hibernate only validates so the production DB and the code do not drift apart.
 - **Testcontainers**: parts where DB behavior matters, such as concurrency in session rotation or the withdraw and re-register scenario, are verified against a real PostgreSQL.
-- **Expo Push + Web Push**: covers both mobile and web at no extra cost. Paid channels such as Kakao Alimtalk were put on hold because the benefit was low for the cost.
+- **Expo Push + Web Push**: covers both mobile and web at no extra cost. Paid channels such as Kakao AlarmTalk were put on hold because the benefit was low for the cost.
 
 ## Tech
 
