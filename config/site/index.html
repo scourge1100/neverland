@@ -3,132 +3,80 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="만든 것과 배운 것을 함께 기록하는 Peter의 포트폴리오형 블로그, Neverland." />
+    <meta name="description" content="Peter · Java, Spring 백엔드 개발자. 만든 것과 그 과정을 적어둡니다." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Neverland — Work, notes, and experiments" />
-    <meta property="og:description" content="만든 것과 배운 것을 함께 기록합니다." />
+    <meta property="og:description" content="만든 것과 그 과정을 적어둡니다." />
     <meta property="og:image" content="https://localhost:3443/og-default.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:type" content="image/png" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="theme-color" content="#163f36" />
+    <meta name="theme-color" content="#f4f1e8" />
     <title>Neverland — Work, notes, and experiments</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@400;600&display=swap" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
-    <link rel="stylesheet" href="/styles.css?v=20261011-1" />
+    <link rel="stylesheet" href="/styles.css?v=20261012-1" />
     <link rel="icon" href="/og-default.svg" type="image/svg+xml" />
   </head>
   <body>
     <a class="skip-link" href="#content">본문으로 이동</a>
     <header class="site-header">
-      <a class="brand" href="/" aria-label="Neverland 홈">
-        <span class="brand-mark" aria-hidden="true">N</span>
-        <span>Neverland</span>
-      </a>
+      <a class="brand" href="/" aria-label="Neverland 홈">Neverland</a>
       <nav class="main-nav" aria-label="주요 메뉴">
         <a href="/projects">Projects</a>
         <a href="/writing">Writing</a>
         <a href="/about">About</a>
+        <a class="admin-link" href="/auth/oidc">Write</a>
       </nav>
-      <a class="admin-link" href="/auth/oidc">Write <span aria-hidden="true">↗</span></a>
     </header>
 
-    <main id="content">
-      <section class="hero section-shell" aria-labelledby="hero-title">
-        <span class="hero-star" aria-hidden="true"></span>
-        <h1 id="hero-title">WORK · NOTES ·<br />EXPERIMENTS</h1>
-        <div class="hero-bottom">
-          <dl class="hero-stats">
-            <div><dt>Projects</dt><dd id="stat-projects">—</dd></div>
-            <div><dt>Notes</dt><dd id="stat-notes">—</dd></div>
-            <div><dt>Updated</dt><dd id="stat-updated">—</dd></div>
-          </dl>
-          <a class="circle-link" href="#projects" aria-label="프로젝트 보기"><span>Explore</span><b aria-hidden="true">↓</b></a>
-        </div>
+    <main id="content" class="section-shell">
+      <section class="intro" aria-labelledby="intro-title">
+        <p class="eyebrow">WORK · NOTES · EXPERIMENTS</p>
+        <h1 id="intro-title">만든 것과 그 과정을<br />적어둡니다.</h1>
+        <p class="intro-who">Peter · Java, Spring 백엔드 개발자</p>
+        <p class="intro-quote">“All children, except one, grow up.” <span>— J. M. Barrie, Peter Pan</span></p>
       </section>
 
-      <section class="projects-section" id="projects" aria-labelledby="projects-title">
-        <div class="section-shell">
-          <div class="section-heading inverse">
-            <div>
-              <p class="section-number">01 / PROJECTS</p>
-              <h2 id="projects-title">프로젝트</h2>
-            </div>
-            <a href="/projects">전체 보기 <span aria-hidden="true">↗</span></a>
-          </div>
-          <div class="project-grid" id="project-grid">
-            <a class="pcard pcard-lead" href="/projects/umpire-platform">
-              <div class="pcard-top"><span class="pcard-no">01</span><span class="pcard-period">2026.04 — <i class="live">Present</i></span></div>
-              <p class="pcard-kicker">Mobile Service</p>
-              <h3>Umpire</h3>
-              <p class="pcard-sub">심판 배정·정산 플랫폼</p>
-              <p class="pcard-summary">가능 일정 수집부터 배정, 공지, 결과 보고, 월 정산까지 한 흐름으로 묶은 서비스.</p>
-              <span class="pcard-go">View case <span aria-hidden="true">↗</span></span>
-            </a>
-            <a class="pcard pcard-all" href="/projects">
-              <p class="pcard-kicker">Archive</p>
-              <h3>모든 프로젝트</h3>
-              <span class="pcard-go">View all <span aria-hidden="true">↗</span></span>
-            </a>
-          </div>
+      <section class="block" id="projects" aria-labelledby="projects-title">
+        <div class="block-head">
+          <h2 id="projects-title">Projects</h2>
+          <a href="/projects" id="projects-all">전체 보기 →</a>
         </div>
-      </section>
-
-      <section class="content-section section-shell" id="writing" aria-labelledby="writing-title">
-        <div class="section-heading">
-          <div>
-            <p class="section-number">02 / WRITING</p>
-            <h2 id="writing-title">기록</h2>
-          </div>
-          <a href="/writing">모든 글 보기 <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="note-list" id="note-list">
-          <a class="note-row" href="/writing/neverland-first-build">
-            <time datetime="2026-07">2026.07</time>
-            <div><p class="note-cat">Build Log</p><h3>Neverland 1차 구축 기록</h3><p>Outline, PostgreSQL, Redis, Dex와 Caddy로 개인 기록 공간의 첫 기반을 만든 과정.</p></div>
-            <span class="arrow" aria-hidden="true">↗</span>
+        <div class="proj-list" id="project-list">
+          <a class="proj-row" href="/projects/umpire-platform">
+            <span class="proj-period">2026.04 — <b>Present</b></span>
+            <span class="proj-main"><strong>Umpire — 심판 배정·정산 플랫폼</strong><span>가능 일정 수집부터 배정, 공지, 결과 보고, 월 정산까지 한 흐름으로 묶은 서비스.</span></span>
+            <span class="proj-tags">Spring Boot · React Native · PostgreSQL</span>
           </a>
         </div>
       </section>
 
-      <section class="github-strip" aria-labelledby="github-title">
-        <div class="section-shell github-inner">
-          <div>
-            <p class="section-number">03 / GITHUB</p>
-            <h2 id="github-title">GitHub</h2>
-          </div>
-          <div id="github-content" class="github-content" aria-live="polite">
-            <p>공개 활동을 불러오는 중입니다.</p>
-          </div>
+      <section class="block" id="writing" aria-labelledby="writing-title">
+        <div class="block-head">
+          <h2 id="writing-title">Writing</h2>
+          <a href="/writing">전체 보기 →</a>
         </div>
-      </section>
-
-      <section class="about section-shell" id="about" aria-labelledby="about-title">
-        <p class="section-number">04 / ABOUT</p>
-        <div class="about-grid">
-          <h2 id="about-title">만든 것과<br />그 과정을 적어둡니다.</h2>
-          <div>
-            <p>포트폴리오용으로 다듬은 결과물이 아니라, 실제로 어떤 선택을 했고 왜 그랬는지를 남기는 개인 공간입니다. 잘된 것도 안된 것도 그냥 적어둡니다.</p>
-            <div class="about-links">
-              <a href="/about">소개 <span aria-hidden="true">↗</span></a>
-              <a href="/experience">경험 <span aria-hidden="true">↗</span></a>
-              <a href="/writing">아카이브 <span aria-hidden="true">↗</span></a>
-              <a href="https://github.com/scourge1100" rel="me">GitHub <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
+        <div class="note-list" id="note-list">
+          <a class="note-row" href="/writing/neverland-first-build">
+            <time datetime="2026-07">2026.07</time>
+            <span class="proj-main"><strong>Neverland 1차 구축 기록</strong><span>Outline, PostgreSQL, Redis, Dex와 Caddy로 개인 기록 공간의 첫 기반을 만든 과정.</span></span>
+          </a>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="section-shell footer-inner">
-        <div><span class="brand-mark inverse-mark" aria-hidden="true">N</span><strong>Neverland</strong></div>
-        <p>© <span id="year">2026</span> · Built as a living archive.</p>
+        <nav aria-label="바닥글 메뉴">
+          <a href="/about">About</a>
+          <a href="/experience">Experience</a>
+          <a href="/writing">Writing</a>
+          <a href="/rss.xml">RSS</a>
+        </nav>
+        <p>© <span id="year">2026</span> Neverland</p>
       </div>
     </footer>
-    <script src="/app.js?v=20261011-1" defer></script>
+    <script src="/app.js?v=20261012-1" defer></script>
   </body>
 </html>
