@@ -59,7 +59,7 @@ flowchart LR
 
 - **Engine (packages/engine)**: Handles log5 plate appearance calculation, the inning state machine, game, season, and world schedules, injuries, condition, and stamina, and trade evaluation. It does not depend on any framework and is verified with unit tests.
 - **Web (apps/web)**: A Next.js app shell, the game screens, and API routes that act as the server. Internationalization (next-intl) and dark/light themes have been in place since the first commit.
-- **Authentication**: Not built from scratch. The app only calls the REST API of a separate auth server (core) that is already in production. Login and token refresh are left to core, and this side verifies the issued JWT to identify the user. On top of email login, I implemented Kakao and Naver social login (web authorization-code flow) through core, and the session and sign-up tokens are kept only in httpOnly cookies.
+- **Authentication**: Not built from scratch. The app only calls the REST API of a separate auth server (core) that is already in production. Login and token refresh are left to core, and this side verifies the issued JWT to identify the user. On top of email login, I implemented Kakao and Naver social login (web authorization-code flow) through core in code, and the session and sign-up tokens are kept only in httpOnly cookies.
 - **DB**: PostgreSQL. World state is stored as a single JSONB row, while team claims, trade proposals, and lineup submissions are split into separate tables.
 
 ## Simulation Engine
@@ -151,11 +151,11 @@ flowchart TD
 I handled everything alone, from planning through implementation, deployment, and operations.
 
 - Wrote the game design documents: roadmap (engine → one club → season → league → world → mobile), how player ratings are represented, and the data source policy
-- Implemented and tested the simulation engine (over 300 tests): log5, the inning state machine, the injury probability model, condition and stamina, manager and coach decisions
+- Implemented and tested the simulation engine (over 340 tests): log5, the inning state machine, the injury probability model, condition and stamina, manager and coach decisions
 - Season mode: schedule generation, standings, postseason, saving
 - World mode: team claims, slot schedule, catch-up advancement, lineup submission, trade proposals and acceptance, roster rules
 - Viewing screens: pitch-by-pitch play-by-play text, batted-ball direction and type presentation, a live diamond view, box scores
-- Auth integration (email, Kakao and Naver login), internationalization (Korean and English) and themes, and an admin tool for entering roster data by hand
+- Auth integration (email login, Kakao and Naver social login implemented), internationalization (Korean and English) and themes, and an admin tool for entering roster data by hand
 - Deployment and operations: Vercel deployment, connecting a self-hosted PostgreSQL, Cron
 
 ## Why These Technologies
@@ -201,13 +201,13 @@ MLB offers public JSON, but KBO's official records have no public API, and the m
 - TypeScript, npm workspaces
 - Next.js (App Router), next-intl, next-themes
 - PostgreSQL (pg), JSONB
-- Vitest (over 300 engine tests)
+- Vitest (over 340 engine tests)
 - Vercel (deployment, Cron), self-hosted PostgreSQL
 - JWT verification, integration with an external auth server (Spring Boot)
 
 ## Current Status
 
-The engine, season mode, and world mode (team claims, automatic advancement, trades, free agency, postseason, offseason notifications) all work. It is in a beta stage used with friends, and the name Pennant Race was settled on 2026-10-14. The plans going forward are:
+The engine, season mode, and world mode (team claims, automatic advancement, trades, free agency, postseason, offseason notifications) all work. It is in a beta stage used with friends, and the name Pennant Race was settled on 2026-10-14. Kakao and Naver login is implemented in code, and connecting each service's app settings is the remaining step. The plans going forward are:
 
 - A review screen for looking back over games that were auto-played during the season and adjusting manager and coach tendencies
 - Notifications for events that need a decision, such as injuries and trade requests
