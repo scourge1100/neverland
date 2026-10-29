@@ -1,5 +1,5 @@
 ---
-title: "Yeolhyeol Gangho W — Game Operations Admin Tool"
+title: "YKW — Game Operations Admin Tool"
 collection: "Portfolio"
 type: "project"
 slug: "yeolhyeolgangho-admin-tool"
@@ -21,13 +21,13 @@ tags:
 lang: "en"
 ---
 
-# Yeolhyeol Gangho W — Game Operations Admin Tool
+# YKW — Game Operations Admin Tool
 
 My first professional project as a developer. I built data management and operations features to make game operations more efficient, and developed practical skills along the way.
 
 ## Background
 
-The Yeolhyeol Gangho W admin tool is an internal web system built at a game company so that operators can carry out game operations work. It was built separately on AWS. The game itself ran on an entirely different group of servers: game data was managed in MSSQL, and real-time data flows such as character movement coordinates were handled in Redis. The admin tool itself was built on MariaDB.
+The YKW admin tool is an internal web system built at a game company so that operators can carry out game operations work. It was built separately on AWS. The game itself ran on an entirely different group of servers: game data was managed in MSSQL, and real-time data flows such as character movement coordinates were handled in Redis. The admin tool itself was built on MariaDB.
 
 The admin tool and the game servers and DB sat in completely separate subnets. An interface server reached the game servers and DB through tunneling between subnets. Through this tool, operators registered in-game announcements, granted items to specific characters, managed events, and looked up user data.
 

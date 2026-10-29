@@ -56,7 +56,7 @@ AWS 3계층 아키텍처 위에서 전자정부프레임워크 기반의 웹 운
 ## 개인 프로젝트
 
 - [Umpire — 심판 배정·정산 플랫폼](/projects/umpire-platform): 기획부터 앱, 서버, 인증, 배포, 운영까지 혼자 만든 서비스. 앱은 [Umpire Mobile](/projects/umpire-mobile), 공통 백엔드는 [Empire Core Platform](/projects/empire-core-platform)에 따로 정리했습니다.
-- [야구 매니지먼트 게임](/projects/baseball-management-game): 확률 시뮬레이션 엔진부터 멀티플레이 월드까지 만들고 있는 개인 프로젝트
+- [페넌트레이스 — 야구 매니지먼트 게임](/projects/baseball-management-game): 확률 시뮬레이션 엔진부터 멀티플레이 월드까지 만들고 있는 개인 프로젝트
 - [Neverland](/projects/neverland): 지금 보고 있는 이 사이트
 - [RealMan Tailor](/projects/realman-tailor): 테일러샵 예약 서비스 팀 프로젝트
 

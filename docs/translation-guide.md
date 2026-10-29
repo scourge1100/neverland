@@ -44,8 +44,8 @@ Use "Name — English descriptor" the same way the Korean title does. Examples:
 - 운영툴 → admin tool / operations tool. 게임 서버 → game server. 인터페이스 서버 → interface server.
 - 운영 → operations / in production (pick what fits). 운영 DB → production DB. 인수인계 → handover. 감리 → audit review
   (an external quality/security audit of a delivered system). 시큐어코딩 → secure coding. 웹접근성 → web accessibility.
-- Company and product names that are Korean: romanize in a natural way, e.g. 열혈강호 W → "Yeolhyeol Gangho W",
-  바즐시스템 → "Bajeul System", 채움솔루션 → "Chaeum Solution", 시그네틱스 → "Signetics", 로그웨이브 → "Logwave",
+- Company and product names that are Korean: romanize in a natural way, e.g. 열혈강호 W → "YKW",
+  바즐시스템 → "BZ System", 채움솔루션 → "Chaeum Solution", 시그네틱스 → "Signetics", 로그웨이브 → "Rogue Wave",
   부천 → "Bucheon". Keep Korean place names romanized. Collect every romanized proper noun you invent or choose and
   list them in your final reply so the owner can confirm the spelling.
 - Roles in frontmatter `role:` should read like a résumé line, e.g. "Planning · Backend · Mobile · Infra & Deployment · Operations".

@@ -1,13 +1,13 @@
 ---
-title: "Baseball Management Game"
+title: "Pennant Race — Baseball Management Game"
 collection: "Portfolio"
 type: "project"
 slug: "baseball-management-game"
-summary: "A web-based baseball management game where you run a club using real KBO and MLB player stats and the server advances the season automatically. A solo personal project, from the probability simulation engine to a multiplayer world."
+summary: "Pennant Race is a web-based baseball management game where you run a club using real KBO and MLB player stats and the server advances the season automatically. A solo personal project, from the probability simulation engine to a multiplayer world."
 category: "Side Project"
 featured: "false"
 publishedAt: "2026-10-11T00:00:00.000Z"
-updatedAt: "2026-10-11T00:00:00.000Z"
+updatedAt: "2026-10-29T00:00:00.000Z"
 role: "Planning · Design · Development · Deployment"
 period: "2026.08 — Present"
 tags:
@@ -19,9 +19,9 @@ tags:
 lang: "en"
 ---
 
-# Baseball Management Game
+# Pennant Race — Baseball Management Game
 
-A web-based baseball management game. You build a team from the stats of real KBO and MLB players, decide lineups, pitching usage, trades, and free agency yourself, and the server carries the season forward. The game does not have a name yet.
+A web-based baseball management game. You build a team from the stats of real KBO and MLB players, decide lineups, pitching usage, trades, and free agency yourself, and the server carries the season forward. The game is called Pennant Race.
 
 ## Background
 
@@ -59,7 +59,7 @@ flowchart LR
 
 - **Engine (packages/engine)**: Handles log5 plate appearance calculation, the inning state machine, game, season, and world schedules, injuries, condition, and stamina, and trade evaluation. It does not depend on any framework and is verified with unit tests.
 - **Web (apps/web)**: A Next.js app shell, the game screens, and API routes that act as the server. Internationalization (next-intl) and dark/light themes have been in place since the first commit.
-- **Authentication**: Not built from scratch. The app only calls the REST API of a separate auth server (core) that is already in production. Login and token refresh are left to core, and this side verifies the issued JWT to identify the user.
+- **Authentication**: Not built from scratch. The app only calls the REST API of a separate auth server (core) that is already in production. Login and token refresh are left to core, and this side verifies the issued JWT to identify the user. On top of email login, I implemented Kakao and Naver social login (web authorization-code flow) through core, and the session and sign-up tokens are kept only in httpOnly cookies.
 - **DB**: PostgreSQL. World state is stored as a single JSONB row, while team claims, trade proposals, and lineup submissions are split into separate tables.
 
 ## Simulation Engine
@@ -125,6 +125,7 @@ sequenceDiagram
 - **Catch-up approach**: Instead of an always-on server running the games, each request that views a world simulates, all at once, the slots that have actually elapsed since the last one processed. If there is no slot to process, nothing happens, so it is safe to call any number of times (idempotent). Cron is only a backup for days when nobody logs in.
 - **Lineup submission window**: A lineup can be submitted for 10 minutes after a game slot starts. If none is submitted, the game proceeds with an automatic lineup at the deadline. The remaining time is for watching the game.
 - **League setup**: MLB and KBO are combined into one world. Trades are allowed only within the same league, and moves across leagues go through a shared free agent pool. Roster rules are also split: 26 players for MLB and 28 for KBO.
+- **Participant display**: Other participants see only the nickname chosen when taking a team, not an email address. A nickname cannot be duplicated within a world, ignoring case.
 - **Season lifecycle**: The regular season, the MLB and KBO postseason brackets, and the offseason (free agency and the period after the trade deadline) advance automatically in line with the real calendar.
 
 ## Business Flow
@@ -154,7 +155,7 @@ I handled everything alone, from planning through implementation, deployment, an
 - Season mode: schedule generation, standings, postseason, saving
 - World mode: team claims, slot schedule, catch-up advancement, lineup submission, trade proposals and acceptance, roster rules
 - Viewing screens: pitch-by-pitch play-by-play text, batted-ball direction and type presentation, a live diamond view, box scores
-- Auth integration, internationalization (Korean and English) and themes, and an admin tool for entering roster data by hand
+- Auth integration (email, Kakao and Naver login), internationalization (Korean and English) and themes, and an admin tool for entering roster data by hand
 - Deployment and operations: Vercel deployment, connecting a self-hosted PostgreSQL, Cron
 
 ## Why These Technologies
@@ -206,7 +207,7 @@ MLB offers public JSON, but KBO's official records have no public API, and the m
 
 ## Current Status
 
-The engine, season mode, and world mode (team claims, automatic advancement, trades, free agency, postseason, offseason notifications) all work. It is in a beta stage used with friends, and the plans going forward are:
+The engine, season mode, and world mode (team claims, automatic advancement, trades, free agency, postseason, offseason notifications) all work. It is in a beta stage used with friends, and the name Pennant Race was settled on 2026-10-14. The plans going forward are:
 
 - A review screen for looking back over games that were auto-played during the season and adjusting manager and coach tendencies
 - Notifications for events that need a decision, such as injuries and trade requests

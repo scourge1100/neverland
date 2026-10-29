@@ -48,7 +48,7 @@ If every new service rebuilds sign-up, login, social login, token refresh, roles
 flowchart LR
     subgraph Clients["Clients"]
         UM["Umpire app"]
-        FO["Baseball management game"]
+        FO["Pennant Race"]
         RM["RealMan"]
         OPS["Admin Ops screens"]
     end
@@ -96,7 +96,7 @@ stateDiagram-v2
 
 ### Integration with Other Services
 
-External services call only core's authentication API (login, sign-up, token refresh, social login) over REST. The baseball management game is one example: it leaves accounts and login to core and verifies the issued JWT on its own server to identify the user. Users are not created separately for each service, and a new service is accepted by adding a service type.
+External services call only core's authentication API (login, sign-up, token refresh, social login) over REST. The baseball management game Pennant Race is one example: it leaves accounts and login to core and verifies the issued JWT on its own server to identify the user. Users are not created separately for each service, and a new service is accepted by adding a service type.
 
 ## Push Notification Delivery
 
@@ -170,4 +170,4 @@ The production push audit workflow compared against a hardcoded Flyway schema ve
 
 ## Current Status
 
-The Umpire service is in real operation on this platform, and the baseball management game uses its authentication over REST. The scheduler has no distributed lock, so duplicate runs must be prevented first before adding instances. That point, and the prerequisites to settle before splitting out the domains, are tracked in documents.
+The Umpire service is in real operation on this platform, and Pennant Race uses its authentication over REST. The scheduler has no distributed lock, so duplicate runs must be prevented first before adding instances. That point, and the prerequisites to settle before splitting out the domains, are tracked in documents.

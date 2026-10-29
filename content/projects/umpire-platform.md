@@ -62,7 +62,7 @@ flowchart LR
 - **core (백엔드)**: Spring Boot 3, Spring Security(JWT), JPA, Flyway, PostgreSQL. 공통 플랫폼(`com.empire.core`: 인증, 사용자와 역할, 설정, 알림, 감사)과 심판 도메인(`com.empire.service.umpire`: 공지, 가능 일정, 경기 슬롯, 배정, 결과 보고, 회원, 커뮤니티, 판정 가이드, 정산)을 같은 프로젝트에서 패키지로 나눴다.
 - **앱**: Expo / React Native / TypeScript. 일반 심판, 국장, 총무가 같은 앱에서 역할별 메뉴를 본다. 웹과 Android를 같은 코드로 빌드한다.
 - **관리자 화면**: 공지 작성, 정산 취합, 로그 조회처럼 PC가 편한 작업은 서버가 렌더링하는 Thymeleaf 화면으로 제공한다.
-- **인증은 공통 플랫폼으로 분리**: 로그인, 토큰 갱신, 소셜 연동, 사용자 역할은 core가 맡고, 다른 개인 프로젝트(Front Office 야구 게임, RealMan)도 서비스 타입으로 구분해 같은 인증을 쓴다.
+- **인증은 공통 플랫폼으로 분리**: 로그인, 토큰 갱신, 소셜 연동, 사용자 역할은 core가 맡고, 다른 개인 프로젝트(야구 게임 페넌트레이스, RealMan)도 서비스 타입으로 구분해 같은 인증을 쓴다.
 
 ### 단일 JAR로 시작한 이유
 

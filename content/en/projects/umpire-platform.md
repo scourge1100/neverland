@@ -63,7 +63,7 @@ flowchart LR
 - **core (backend)**: Spring Boot 3, Spring Security (JWT), JPA, Flyway, PostgreSQL. The common platform (`com.empire.core`: authentication, users and roles, settings, notifications, audit) and the umpire domain (`com.empire.service.umpire`: announcements, availability, game slots, assignments, game reports, members, community, rules guide, settlement) live in the same project, separated by packages.
 - **App**: Expo / React Native / TypeScript. Regular umpires, the Director, and the Treasurer use the same app and see role-specific menus. Web and Android are built from the same code.
 - **Admin screen**: Tasks that are easier on a PC, such as writing announcements, compiling settlements, and viewing logs, are provided as server-rendered Thymeleaf screens.
-- **Authentication split into a common platform**: core handles login, token refresh, social login linking, and user roles. Other personal projects (the Front Office baseball game and RealMan) use the same authentication, distinguished by service type.
+- **Authentication split into a common platform**: core handles login, token refresh, social login linking, and user roles. Other personal projects (the baseball game Pennant Race and RealMan) use the same authentication, distinguished by service type.
 
 ### Why a Single JAR
 

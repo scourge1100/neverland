@@ -19,7 +19,7 @@ lang: "en"
 
 # Sending Text to the Game Server Safely: S3 and Encryption
 
-This is a record of one feature I handled while building the game admin tool ([Yeolhyeol Gangho W — Game Operations Admin Tool](/en/projects/yeolhyeolgangho-admin-tool)). It was a small feature that took about a month, but I learned a lot from it because I had to read the AWS SDK directly and design the encryption myself.
+This is a record of one feature I handled while building the game admin tool ([YKW — Game Operations Admin Tool](/en/projects/yeolhyeolgangho-admin-tool)). It was a small feature that took about a month, but I learned a lot from it because I had to read the AWS SDK directly and design the encryption myself.
 
 ## Background
 

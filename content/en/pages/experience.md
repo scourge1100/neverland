@@ -34,11 +34,11 @@ On the IT team of a semiconductor manufacturer, I developed and maintained Java-
 - [CoA Data Collection & Validation System](/en/projects/coa-quality-system): SFTP collection, validation and approval of supplier quality data (2024.05 — 2024.12)
 - [RFQ Digitization](/en/projects/rfq-foundation): a new foundation on Java 17 and Spring Boot instead of the legacy system (2024.12 — 2025.04)
 
-## Logwave · 2021.11 — 2022.11
+## Rogue Wave · 2021.11 — 2022.11
 
 I built a web-based admin tool on an AWS three-tier architecture using the eGovFrame framework. I implemented AWS service features with the AWS Java SDK, and after the game launched I handled maintenance, new features, system monitoring, and incident response.
 
-- [Yeolhyeol Gangho W — Game Operations Admin Tool](/en/projects/yeolhyeolgangho-admin-tool): game operations data management and operational features such as item grants
+- [YKW — Game Operations Admin Tool](/en/projects/yeolhyeolgangho-admin-tool): game operations data management and operational features such as item grants
 - [Sending Text to the Game Server Safely: S3 and Encryption](/en/writing/encrypted-text-delivery-s3): notes on a small feature delivered with S3 and encryption
 
 ## Innotree · 2019.12 — 2021.10
@@ -57,7 +57,7 @@ I worked mainly on Korea Airports Corporation projects: managing airline system 
 ## Personal projects
 
 - [Umpire — Game Assignment & Settlement Platform](/en/projects/umpire-platform): a service I built alone, from planning to app, server, authentication, deployment and operations. The app is covered in [Umpire Mobile](/en/projects/umpire-mobile), and the shared backend in [Empire Core Platform](/en/projects/empire-core-platform).
-- [Baseball Management Game](/en/projects/baseball-management-game): a personal project, from a probability simulation engine to a multiplayer world
+- [Pennant Race — Baseball Management Game](/en/projects/baseball-management-game): a personal project, from a probability simulation engine to a multiplayer world
 - [Neverland](/en/projects/neverland): this site
 - [RealMan Tailor](/en/projects/realman-tailor): a team project for a tailor shop booking service
 
